@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Timed Shapes</title>
+        <script src="https://unpkg.com/react@15.3.2/dist/react.js"></script>
+        <script src="https://unpkg.com/react-dom@15.3.2/dist/react-dom.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+    </head>
+
+    <body>
+        <div id="container"></div>
+        <script type="text/babel">
+
+        class Shape extends React.Component {
+          constructor(props, context) {
+            super(props, context);
+
+            this.state = {
+              bgColor: colors[Math.floor(Math.random() * colors.length)],
+              size: 100,
+              perCent: "50%"
+            };
+            this.timerTick = this.timerTick.bind(this);
+          }
+
+          timerTick() {
+            this.setState({
+              bgColor: colors[Math.floor(Math.random() * colors.length)],
+              size: Math.floor(125 * Math.random()),
+              perCent: Math.floor(100 * Math.random()).toString() + "%"
+            });
+          }
+
+          componentDidMount() {
+            setInterval(this.timerTick, 1000);
+          }
+
+          render() {
+            var shapeStyle = {
+                padding: 10,
+                margin: 20,
+                display: "inline-block",
+                backgroundColor: this.state.bgColor,
+                borderRadius: this.state.perCent,
+                width: this.state.size,
+                height: this.state.size
+            };
+
+            return (
+              <div style={shapeStyle}>
+              </div>
+            );
+          }
+        }
+
+        var colors = ["#0083ff", "#00c7ff", "#00fffa", "#28c5d3",
+                           "#2894d3", "#286cd3", "#0264f7", "#83fcde",
+                           "#83defc", "#022866", "#83b1fc", "#000e2b",
+                           "#2faafc", "#007a78", "#11a08f", "#4982dd",
+                           "#49b6dd", "#4984dd", "#073e91", "#4adbcf"]
+        var renderData =[];
+
+        for (var i = 0; 60 > i; i++)
+          renderData.push(<Shape bgColor={colors[i]}/>);
+
+
+        ReactDOM.render(
+          <div>
+            {renderData}
+          </div>,
+          document.querySelector("#container")
+        );
+
+        </script>
+    </body>
+</html>
